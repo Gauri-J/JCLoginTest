@@ -9,7 +9,9 @@ import org.example.utils.AndroidActions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class VerifyOTPPage extends AndroidActions {
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"Verify number\"]")
     private WebElement verifyOTPTitle;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"We care about your privacy and security. Let's get started.\"]")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"We have sent the OTP to \"]")
     private WebElement subtext1;
 
     @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.EditText\").instance(0)")
@@ -74,4 +76,14 @@ public class VerifyOTPPage extends AndroidActions {
     public void clickOnBackBtn(){
         backBtn.click();
     }
+
+    public void waitForOtpToAutofill() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(driver1 -> {
+            WebElement otpField = driver1.findElement(AppiumBy.androidUIAutomator("new UiSelector().className(\"android.widget.EditText\").instance(0)"));
+            String value = otpField.getText();
+            return value != null && !value.isEmpty(); // return true once field is filled
+        });
+    }
+
 }

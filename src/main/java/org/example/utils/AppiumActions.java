@@ -26,7 +26,7 @@ public class AppiumActions {
         try {
             // Wait until either Login screen or Home screen is visible
             wait.until(d -> {
-                boolean loginVisible = !driver.findElements(By.xpath("//android.widget.TextView[@resource-id=\"We care about your privacy and security. Let's get started.\"]")).isEmpty();
+                boolean loginVisible = !driver.findElements(By.id("We care about your privacy and security. Let's get started.")).isEmpty();
                 boolean homeVisible = !driver.findElements(By.id("home_screen_root")).isEmpty();
                 return loginVisible || homeVisible;
             });
